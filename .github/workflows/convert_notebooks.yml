@@ -1,0 +1,23 @@
+name: Convert Notebooks to HTML
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Python
+      uses: actions/setup-python@v2
+    - name: Install dependencies
+      run: |
+        pip install jupyter nbconvert
+    - name: Convert notebooks
+      run: |
+        jupyter nbconvert --to html *.ipynb
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
