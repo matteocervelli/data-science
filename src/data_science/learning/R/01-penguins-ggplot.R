@@ -1,0 +1,2 @@
+penguins <- na.omit(penguins)
+ggplot(data=penguins,aes(x=flipper_length_mm,y=body_mass_g)) + geom_point(aes(color=species)) + geom_smooth(method = "lm", formula = y ~ poly(x,2), color="brown") + labs(title="Palmer Penguins: Body Mass vs Flipper Length", x="Flipper Length (mm)", y="Body Mass (g)", subtitle="Data from the Palmer Penguins dataset.", caption="Source: https://allisonhorst.github.io/palmerpenguins/articles/intro.html") + theme_minimal() + facet_wrap(~species)

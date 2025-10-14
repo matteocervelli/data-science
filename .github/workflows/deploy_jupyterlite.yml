@@ -1,0 +1,36 @@
+name: Deploy JupyterLite
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install JupyterLite
+      run: |
+        pip install jupyterlite-core jupyterlite-pyodide-kernel jupyterlite-xeus-python
+    
+    - name: Build JupyterLite
+      run: |
+        # Copia tutti i notebook nella cartella content
+        mkdir -p content
+        find . -name "*.ipynb" -not -path "./.git/*" -exec cp --parents {} content/ \;
+        
+        # Costruisci JupyterLite
+        jupyter lite build --contents content --output-dir dist
+    
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-page
