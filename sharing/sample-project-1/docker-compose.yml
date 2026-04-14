@@ -1,0 +1,29 @@
+services:
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: grafana-healthcare
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./healthcare_sales.db:/var/lib/grafana/healthcare_sales.db:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/dashboards/dashboard-config.yaml:/etc/grafana/provisioning/dashboards/dashboard-config.yaml
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_INSTALL_PLUGINS=frser-sqlite-datasource
+      - GF_SERVER_ROOT_URL=http://localhost:3000
+      - GF_ANALYTICS_REPORTING_ENABLED=false
+    networks:
+      - grafana-network
+
+volumes:
+  grafana-storage:
+    driver: local
+
+networks:
+  grafana-network:
+    driver: bridge

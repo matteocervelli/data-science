@@ -1,0 +1,11 @@
+apiVersion: 1
+
+datasources:
+  - name: Healthcare Sales SQLite
+    type: frser-sqlite-datasource
+    access: proxy
+    url: /var/lib/grafana/healthcare_sales.db
+    isDefault: true
+    editable: true
+    jsonData:
+      path: /var/lib/grafana/healthcare_sales.db

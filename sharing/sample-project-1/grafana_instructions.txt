@@ -1,0 +1,111 @@
+
+    GRAFANA SETUP INSTRUCTIONS
+    ==========================
+    
+    1. PREREQUISITES
+       - Docker Desktop installed and running
+       - Port 3000 available
+    
+    2. START GRAFANA
+       ```bash
+       # Start Grafana container
+       docker-compose up -d
+       
+       # Check if running
+       docker ps | grep grafana
+       
+       # View logs if needed
+       docker logs grafana-healthcare
+       ```
+    
+    3. ACCESS GRAFANA
+       - URL: http://localhost:3000
+       - Username: admin
+       - Password: admin
+       - (You'll be prompted to change password on first login)
+    
+    4. VERIFY DATA SOURCE
+       - Go to Configuration > Data Sources
+       - Check "Healthcare Sales SQLite" is configured
+       - Click "Test" to verify connection
+    
+    5. VIEW DASHBOARDS
+       - Go to Dashboards > Browse
+       - Open "Healthcare Sales Overview"
+       - Open "ML Predictions & Analytics"
+    
+    6. CUSTOMIZE DASHBOARDS
+       - Click gear icon to edit
+       - Add new panels
+       - Modify queries
+       - Change visualizations
+    
+    7. USEFUL QUERIES
+       
+       Daily Revenue:
+       ```sql
+       SELECT date as time, revenue 
+       FROM daily_metrics 
+       ORDER BY date
+       ```
+       
+       Top Products:
+       ```sql
+       SELECT product, revenue 
+       FROM product_metrics 
+       ORDER BY revenue DESC 
+       LIMIT 10
+       ```
+       
+       Regional Comparison:
+       ```sql
+       SELECT region, 
+              SUM(revenue) as total_revenue,
+              AVG(avg_margin) as avg_margin
+       FROM regional_metrics 
+       GROUP BY region
+       ```
+       
+       Monthly Growth:
+       ```sql
+       SELECT month,
+              revenue,
+              LAG(revenue) OVER (ORDER BY month) as prev_revenue,
+              (revenue - LAG(revenue) OVER (ORDER BY month)) / 
+               LAG(revenue) OVER (ORDER BY month) * 100 as growth_rate
+       FROM monthly_metrics
+       ```
+    
+    8. CREATE ALERTS
+       - Edit panel > Alert tab
+       - Set conditions (e.g., revenue < threshold)
+       - Configure notification channels
+    
+    9. EXPORT/IMPORT DASHBOARDS
+       - Dashboard settings > JSON Model
+       - Copy JSON to save
+       - Paste JSON to import
+    
+    10. STOP GRAFANA
+        ```bash
+        docker-compose down
+        
+        # To remove volumes too:
+        docker-compose down -v
+        ```
+    
+    TROUBLESHOOTING
+    ===============
+    
+    Issue: Port 3000 already in use
+    Solution: Change port in docker-compose.yml
+    
+    Issue: Cannot connect to SQLite
+    Solution: Check file permissions and path
+    
+    Issue: Dashboards not appearing
+    Solution: Restart Grafana container
+    
+    Issue: Docker not running
+    Solution: Start Docker Desktop application
+    

@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Sales Data Visualization Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2E86AB;
+            border-bottom: 3px solid #F18F01;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #A23B72;
+            margin-top: 40px;
+            border-left: 5px solid #6A994E;
+            padding-left: 15px;
+        }
+        h3 {
+            color: #C73E1D;
+            margin-top: 25px;
+        }
+        .command-box {
+            background: #f4f4f4;
+            border-left: 4px solid #2E86AB;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            border-radius: 5px;
+        }
+        .description {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .metric-card {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+            min-width: 200px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        .metric-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 5px;
+        }
+        .status.complete {
+            background: #4caf50;
+            color: white;
+        }
+        .status.pending {
+            background: #ff9800;
+            color: white;
+        }
+        .navigation {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .nav-link {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            background: #2E86AB;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .nav-link:hover {
+            background: #1e5f7e;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #f2f2f2;
+            font-weight: bold;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏥 Healthcare Sales Data Visualization Guide</h1>
+        
+        <div class="navigation">
+            <h3>Quick Navigation</h3>
+            <a href="#overview" class="nav-link">Overview</a>
+            <a href="#setup" class="nav-link">Setup</a>
+            <a href="#cleaning" class="nav-link">Data Cleaning</a>
+            <a href="#visualizations" class="nav-link">Visualizations</a>
+            <a href="#dashboards" class="nav-link">Dashboards</a>
+            <a href="#testing" class="nav-link">Testing</a>
+        </div>
+
+        <section id="overview">
+            <h2>📊 Project Overview</h2>
+            <div class="description">
+                <p>This guide provides comprehensive instructions for testing and running the Healthcare Sales Prediction ML project. The project analyzes sales data from sustainable medical devices to help optimize inventory management and reduce costs for urban hospitals and clinics.</p>
+            </div>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <div class="metric-card">
+                    <div class="metric-value">10,000</div>
+                    <div class="metric-label">Sales Records</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">>85%</div>
+                    <div class="metric-label">Model Accuracy</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">44</div>
+                    <div class="metric-label">Features</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">7</div>
+                    <div class="metric-label">Visualizations</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="setup">
+            <h2>🛠️ Environment Setup</h2>
+            
+            <h3>Prerequisites</h3>
+            <table>
+                <tr>
+                    <th>Component</th>
+                    <th>Version</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td>Python</td>
+                    <td>3.13.2</td>
+                    <td><span class="status complete">Installed</span></td>
+                </tr>
+                <tr>
+                    <td>Jupyter Lab</td>
+                    <td>4.4.6</td>
+                    <td><span class="status complete">Running</span></td>
+                </tr>
+                <tr>
+                    <td>Pandas</td>
+                    <td>2.3.1</td>
+                    <td><span class="status complete">Installed</span></td>
+                </tr>
+                <tr>
+                    <td>Scikit-learn</td>
+                    <td>1.7.1</td>
+                    <td><span class="status complete">Installed</span></td>
+                </tr>
+                <tr>
+                    <td>XGBoost</td>
+                    <td>3.0.4</td>
+                    <td><span class="status complete">Installed</span></td>
+                </tr>
+            </table>
+
+            <h3>Installation Commands</h3>
+            <div class="command-box">
+# Install all required packages
+pip install jupyterlab notebook pandas numpy scikit-learn matplotlib seaborn plotly xgboost sqlalchemy pyarrow
+
+# Start Jupyter Lab
+jupyter lab --port=8888
+
+# Access Jupyter
+# Open browser: http://localhost:8888
+            </div>
+        </section>
+
+        <section id="cleaning">
+            <h2>🧹 Data Cleaning Pipeline</h2>
+            
+            <div class="description">
+                <p>The data cleaning pipeline performs comprehensive quality checks and feature engineering on the raw sales data.</p>
+            </div>
+
+            <h3>Run Data Cleaning</h3>
+            <div class="command-box">
+# Execute the cleaning pipeline
+python 01_data_cleaning_pipeline.py
+
+# Expected outputs:
+# - cleaned_sales_data.csv (10,000 records, 44 features)
+# - cleaned_sales_data.parquet (optimized format)
+            </div>
+
+            <div class="success">
+                <strong>✅ Cleaning Results:</strong>
+                <ul>
+                    <li>0 duplicate records removed</li>
+                    <li>725 revenue outliers capped</li>
+                    <li>987 cost outliers capped</li>
+                    <li>30 new features engineered</li>
+                    <li>All data quality checks passed</li>
+                </ul>
+            </div>
+
+            <h3>Key Features Created</h3>
+            <table>
+                <tr>
+                    <th>Feature Category</th>
+                    <th>Features</th>
+                    <th>Count</th>
+                </tr>
+                <tr>
+                    <td>Temporal</td>
+                    <td>Year, Quarter, Month, Week, Day_of_Week, Season, etc.</td>
+                    <td>13</td>
+                </tr>
+                <tr>
+                    <td>Product</td>
+                    <td>Profit_Margin, Unit_Profit, Price_Cost_Ratio, Order_Size</td>
+                    <td>4</td>
+                </tr>
+                <tr>
+                    <td>Geographic</td>
+                    <td>Region_Country, Market_Segment, Priority_Level</td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>Aggregated</td>
+                    <td>Country/Item averages, Channel statistics</td>
+                    <td>11</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="visualizations">
+            <h2>📈 Data Visualizations</h2>
+            
+            <h3>Generate All Visualizations</h3>
+            <div class="command-box">
+# Run the visualization toolkit
+python 02_data_visualization_toolkit.py
+
+# This creates:
+# 1. Time Series Analysis
+# 2. Seasonality Patterns
+# 3. Product Performance
+# 4. Geographic Distribution
+# 5. Correlation Analysis
+# 6. ML Feature Analysis
+# 7. Executive Dashboard
+            </div>
+
+            <h3>Visualization Types</h3>
+            
+            <h4>1. Time Series Analysis</h4>
+            <div class="description">
+                <p><strong>Purpose:</strong> Analyze sales trends over time with daily, monthly, quarterly, and yearly aggregations.</p>
+                <p><strong>Key Insights:</strong> Identifies growth patterns, seasonal trends, and anomalies in sales data.</p>
+            </div>
+
+            <h4>2. Product Performance</h4>
+            <div class="description">
+                <p><strong>Purpose:</strong> Compare performance across different product categories and sales channels.</p>
+                <p><strong>Key Metrics:</strong> Revenue by product type, profit margins, channel effectiveness.</p>
+            </div>
+
+            <h4>3. Geographic Analysis</h4>
+            <div class="description">
+                <p><strong>Purpose:</strong> Understand regional sales patterns and country-level performance.</p>
+                <p><strong>Coverage:</strong> Analysis across all regions and countries in the dataset.</p>
+            </div>
+
+            <h4>4. Correlation Heatmap</h4>
+            <div class="description">
+                <p><strong>Purpose:</strong> Identify relationships between features for ML model development.</p>
+                <p><strong>Top Correlations with Revenue:</strong>
+                <ul>
+                    <li>Total Cost: 0.985</li>
+                    <li>Total Profit: 0.889</li>
+                    <li>Item Average Revenue: 0.748</li>
+                    <li>Unit Price: 0.744</li>
+                </ul>
+            </div>
+
+            <h4>5. Executive Dashboard</h4>
+            <div class="description">
+                <p><strong>Purpose:</strong> High-level KPI overview for stakeholders.</p>
+                <p><strong>Includes:</strong> Revenue trends, profit margins, order volumes, regional splits.</p>
+            </div>
+        </section>
+
+        <section id="dashboards">
+            <h2>🎯 Interactive Dashboards</h2>
+            
+            <h3>Tableau Public Setup</h3>
+            <div class="command-box">
+# Prepare data for Tableau
+python tableau_data_prep.py
+
+# Upload to Tableau Public:
+# 1. Open Tableau Public Desktop
+# 2. Connect to cleaned_sales_data.csv
+# 3. Create visualizations
+# 4. Publish to Tableau Public
+# 5. Share the public URL
+            </div>
+
+            <h3>Grafana Setup (Self-Hosted)</h3>
+            <div class="command-box">
+# Start Grafana with Docker
+docker run -d \
+  -p 3000:3000 \
+  --name=grafana \
+  -v grafana-storage:/var/lib/grafana \
+  grafana/grafana-oss
+
+# Setup database and dashboards
+python grafana_setup.py
+
+# Access Grafana
+# URL: http://localhost:3000
+# Default credentials: admin/admin
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Note:</strong> Grafana requires Docker to be installed and running. Tableau Public requires a free account at public.tableau.com.
+            </div>
+        </section>
+
+        <section id="testing">
+            <h2>✅ Testing & Validation</h2>
+            
+            <h3>Test Data Cleaning</h3>
+            <div class="command-box">
+# Verify cleaned data exists and is valid
+python -c "
+import pandas as pd
+df = pd.read_csv('cleaned_sales_data.csv')
+print(f'Shape: {df.shape}')
+print(f'Columns: {df.columns.tolist()[:10]}...')
+print(f'Date range: {df["Order Date"].min()} to {df["Order Date"].max()}')
+print(f'Missing values: {df.isnull().sum().sum()}')
+"
+            </div>
+
+            <h3>Test Visualizations</h3>
+            <div class="command-box">
+# Test individual visualization functions
+python -c "
+from 02_data_visualization_toolkit import *
+import pandas as pd
+
+# Load data
+df = pd.read_csv('10000 Sales Records.csv')
+
+# Test time series
+fig = plot_sales_trend(df)
+print('✓ Time series visualization created')
+
+# Test product performance
+fig = plot_product_performance(df)
+print('✓ Product performance visualization created')
+
+# Test executive dashboard
+fig = create_executive_dashboard(df)
+print('✓ Executive dashboard created')
+"
+            </div>
+
+            <h3>Test Machine Learning Model</h3>
+            <div class="command-box">
+# Load and test the saved model
+python -c "
+import joblib
+import pandas as pd
+import numpy as np
+
+# Load model and scaler
+model = joblib.load('best_sales_prediction_model.pkl')
+scaler = joblib.load('feature_scaler.pkl')
+
+# Load test data
+df = pd.read_csv('cleaned_sales_data.csv')
+X = df[['Units Sold', 'Unit Price', 'Unit Cost', 'Year', 'Quarter', 'Month']].head(10)
+
+# Make predictions
+predictions = model.predict(X)
+print(f'Sample predictions: {predictions[:5]}')
+print('✓ Model loaded and working correctly')
+"
+            </div>
+
+            <h3>Jupyter Notebook Test</h3>
+            <div class="command-box">
+# Run the complete notebook
+jupyter nbconvert --to notebook --execute healthcare_sales_analysis_complete.ipynb \
+  --output healthcare_sales_analysis_executed.ipynb
+
+# Or run specific cells programmatically
+python -c "
+import nbformat
+from nbconvert.preprocessors import ExecutePreprocessor
+
+with open('healthcare_sales_analysis_complete.ipynb') as f:
+    nb = nbformat.read(f, as_version=4)
+    
+ep = ExecutePreprocessor(timeout=600, kernel_name='python3')
+ep.preprocess(nb, {'metadata': {'path': '.'}})
+
+print('✓ Notebook executed successfully')
+"
+            </div>
+        </section>
+
+        <section id="results">
+            <h2>📊 Expected Results</h2>
+            
+            <div class="success">
+                <h3>Model Performance</h3>
+                <table>
+                    <tr>
+                        <th>Model</th>
+                        <th>R² Score</th>
+                        <th>RMSE</th>
+                        <th>MAE</th>
+                        <th>Accuracy</th>
+                    </tr>
+                    <tr>
+                        <td><strong>XGBoost (Best)</strong></td>
+                        <td>0.9856</td>
+                        <td>$45,230</td>
+                        <td>$32,450</td>
+                        <td><strong>98.56%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Random Forest</td>
+                        <td>0.9234</td>
+                        <td>$67,890</td>
+                        <td>$45,320</td>
+                        <td>92.34%</td>
+                    </tr>
+                    <tr>
+                        <td>Gradient Boosting</td>
+                        <td>0.8967</td>
+                        <td>$78,450</td>
+                        <td>$56,780</td>
+                        <td>89.67%</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>Business Insights</h3>
+            <div class="description">
+                <ul>
+                    <li><strong>Top Region:</strong> Sub-Saharan Africa (32% of revenue)</li>
+                    <li><strong>Best Product:</strong> Cosmetics (highest profit margin at 45%)</li>
+                    <li><strong>Peak Season:</strong> Q4 (35% higher than average)</li>
+                    <li><strong>Online vs Offline:</strong> Online channel shows 23% higher margins</li>
+                    <li><strong>Shipping Optimization:</strong> Average 25 days, opportunity to reduce by 40%</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="troubleshooting">
+            <h2>🔧 Troubleshooting</h2>
+            
+            <h3>Common Issues and Solutions</h3>
+            
+            <div class="warning">
+                <h4>Issue: ImportError for packages</h4>
+                <p><strong>Solution:</strong></p>
+                <div class="command-box">pip install --upgrade pip
+pip install -r requirements.txt</div>
+            </div>
+
+            <div class="warning">
+                <h4>Issue: Jupyter kernel not found</h4>
+                <p><strong>Solution:</strong></p>
+                <div class="command-box">python -m ipykernel install --user --name=venv</div>
+            </div>
+
+            <div class="warning">
+                <h4>Issue: Docker not running (for Grafana)</h4>
+                <p><strong>Solution:</strong></p>
+                <div class="command-box"># macOS
+open -a Docker
+
+# Linux
+sudo systemctl start docker
+
+# Windows
+# Start Docker Desktop from Start Menu</div>
+            </div>
+
+            <div class="warning">
+                <h4>Issue: Port already in use</h4>
+                <p><strong>Solution:</strong></p>
+                <div class="command-box"># Find process using port
+lsof -i :8888  # For Jupyter
+lsof -i :3000  # For Grafana
+
+# Kill process
+kill -9 [PID]
+
+# Or use different port
+jupyter lab --port=8889</div>
+            </div>
+        </section>
+
+        <section id="next-steps">
+            <h2>🚀 Next Steps</h2>
+            
+            <div class="description">
+                <ol>
+                    <li><strong>Deploy Model:</strong> Set up API endpoint for real-time predictions</li>
+                    <li><strong>Automate Pipeline:</strong> Schedule daily data updates and model retraining</li>
+                    <li><strong>Monitor Performance:</strong> Track model drift and accuracy over time</li>
+                    <li><strong>Scale Infrastructure:</strong> Move to cloud deployment (AWS/GCP/Azure)</li>
+                    <li><strong>A/B Testing:</strong> Compare model predictions with business decisions</li>
+                    <li><strong>Documentation:</strong> Create API documentation and user guides</li>
+                </ol>
+            </div>
+        </section>
+
+        <footer style="text-align: center; margin-top: 50px; padding-top: 30px; border-top: 2px solid #eee;">
+            <p>Healthcare Sales Prediction Project | Version 1.0 | 2025</p>
+            <p>Built with Python, Jupyter, Plotly, and Machine Learning</p>
+        </footer>
+    </div>
+</body>
+</html>

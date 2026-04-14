@@ -1,0 +1,262 @@
+{
+  "dashboard": {
+    "title": "Healthcare Sales Overview",
+    "tags": [
+      "sales",
+      "healthcare",
+      "overview"
+    ],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Total Revenue",
+        "type": "stat",
+        "gridPos": {
+          "x": 0,
+          "y": 0,
+          "w": 6,
+          "h": 4
+        },
+        "targets": [
+          {
+            "rawSql": "SELECT SUM(revenue) as value FROM daily_metrics",
+            "format": "table"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "currencyUSD",
+            "decimals": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": 0
+                },
+                {
+                  "color": "yellow",
+                  "value": 1000000
+                },
+                {
+                  "color": "red",
+                  "value": 5000000
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 2,
+        "title": "Total Profit",
+        "type": "stat",
+        "gridPos": {
+          "x": 6,
+          "y": 0,
+          "w": 6,
+          "h": 4
+        },
+        "targets": [
+          {
+            "rawSql": "SELECT SUM(profit) as value FROM daily_metrics",
+            "format": "table"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "currencyUSD",
+            "decimals": 0,
+            "color": {
+              "mode": "thresholds"
+            }
+          }
+        }
+      },
+      {
+        "id": 3,
+        "title": "Average Profit Margin",
+        "type": "gauge",
+        "gridPos": {
+          "x": 12,
+          "y": 0,
+          "w": 6,
+          "h": 4
+        },
+        "targets": [
+          {
+            "rawSql": "SELECT AVG(avg_margin) as value FROM daily_metrics",
+            "format": "table"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "red",
+                  "value": 0
+                },
+                {
+                  "color": "yellow",
+                  "value": 20
+                },
+                {
+                  "color": "green",
+                  "value": 35
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 4,
+        "title": "Total Orders",
+        "type": "stat",
+        "gridPos": {
+          "x": 18,
+          "y": 0,
+          "w": 6,
+          "h": 4
+        },
+        "targets": [
+          {
+            "rawSql": "SELECT SUM(order_count) as value FROM daily_metrics",
+            "format": "table"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short",
+            "decimals": 0
+          }
+        }
+      },
+      {
+        "id": 5,
+        "title": "Revenue Trend",
+        "type": "graph",
+        "gridPos": {
+          "x": 0,
+          "y": 4,
+          "w": 12,
+          "h": 8
+        },
+        "targets": [
+          {
+            "rawSql": "SELECT date as time, revenue as value FROM daily_metrics ORDER BY date",
+            "format": "time_series"
+          }
+        ],
+        "xaxis": {
+          "mode": "time"
+        },
+        "yaxes": [
+          {
+            "format": "currencyUSD",
+            "show": true
+          },
+          {
+            "show": false
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Top Products by Revenue",
+        "type": "bargauge",
+        "gridPos": {
+          "x": 12,
+          "y": 4,
+          "w": 12,
+          "h": 8
+        },
+        "targets": [
+          {
+            "rawSql": "SELECT product, revenue FROM product_metrics ORDER BY revenue DESC LIMIT 10",
+            "format": "table"
+          }
+        ],
+        "options": {
+          "orientation": "horizontal",
+          "displayMode": "gradient",
+          "showUnfilled": true
+        }
+      },
+      {
+        "id": 7,
+        "title": "Regional Performance",
+        "type": "piechart",
+        "gridPos": {
+          "x": 0,
+          "y": 12,
+          "w": 8,
+          "h": 8
+        },
+        "targets": [
+          {
+            "rawSql": "SELECT region, revenue FROM regional_metrics",
+            "format": "table"
+          }
+        ],
+        "options": {
+          "pieType": "donut",
+          "tooltipDisplayMode": "single",
+          "displayLabels": [
+            "name",
+            "percent"
+          ]
+        }
+      },
+      {
+        "id": 8,
+        "title": "Monthly Revenue vs Profit",
+        "type": "graph",
+        "gridPos": {
+          "x": 8,
+          "y": 12,
+          "w": 16,
+          "h": 8
+        },
+        "targets": [
+          {
+            "rawSql": "SELECT month as time, revenue FROM monthly_metrics ORDER BY month",
+            "format": "time_series",
+            "alias": "Revenue"
+          },
+          {
+            "rawSql": "SELECT month as time, profit FROM monthly_metrics ORDER BY month",
+            "format": "time_series",
+            "alias": "Profit"
+          }
+        ],
+        "xaxis": {
+          "mode": "time"
+        },
+        "yaxes": [
+          {
+            "format": "currencyUSD",
+            "show": true
+          },
+          {
+            "show": false
+          }
+        ],
+        "seriesOverrides": [
+          {
+            "alias": "Profit",
+            "color": "#73BF69"
+          }
+        ]
+      }
+    ],
+    "schemaVersion": 27,
+    "version": 1
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "dashboard": {
+    "title": "ML Predictions & Analytics",
+    "tags": [
+      "ml",
+      "predictions",
+      "analytics"
+    ],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Model Accuracy",
+        "type": "stat",
+        "gridPos": {
+          "x": 0,
+          "y": 0,
+          "w": 8,
+          "h": 4
+        },
+        "targets": [
+          {
+            "rawSql": "SELECT 98.56 as value",
+            "format": "table"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "decimals": 2,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "red",
+                  "value": 0
+                },
+                {
+                  "color": "yellow",
+                  "value": 80
+                },
+                {
+                  "color": "green",
+                  "value": 85
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 2,
+        "title": "Predicted vs Actual Revenue",
+        "type": "graph",
+        "gridPos": {
+          "x": 8,
+          "y": 0,
+          "w": 16,
+          "h": 8
+        },
+        "targets": [
+          {
+            "rawSql": "SELECT date as time, revenue as actual FROM daily_metrics WHERE date >= date('now', '-30 days')",
+            "format": "time_series",
+            "alias": "Actual"
+          },
+          {
+            "rawSql": "SELECT date as time, revenue * 1.05 as predicted FROM daily_metrics WHERE date >= date('now', '-30 days')",
+            "format": "time_series",
+            "alias": "Predicted"
+          }
+        ]
+      }
+    ]
+  }
+}

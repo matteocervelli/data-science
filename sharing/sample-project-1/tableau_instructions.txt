@@ -1,0 +1,114 @@
+
+    TABLEAU PUBLIC UPLOAD INSTRUCTIONS
+    ===================================
+    
+    1. PREPARE TABLEAU PUBLIC ACCOUNT
+       - Go to https://public.tableau.com
+       - Sign up for free account if needed
+       - Download Tableau Public Desktop
+    
+    2. CONNECT TO DATA
+       - Open Tableau Public Desktop
+       - Click "Connect" > "Text file"
+       - Select: tableau_sales_detailed.csv
+       - Add connections for aggregated tables:
+         * tableau_daily_metrics.csv
+         * tableau_monthly_metrics.csv
+         * tableau_product_metrics.csv
+         * tableau_geographic_metrics.csv
+    
+    3. CREATE RELATIONSHIPS
+       - Link tables on common fields:
+         * Date fields for time-based joins
+         * Region/Country for geographic joins
+         * Item Type for product joins
+    
+    4. BUILD DASHBOARDS
+       
+       Dashboard 1: Executive Overview
+       - KPI cards: Total Revenue, Profit Margin, Orders
+       - Line chart: Revenue trend over time
+       - Bar chart: Top 10 products
+       - Map: Revenue by country
+       
+       Dashboard 2: Sales Analysis
+       - Time series with forecast
+       - Seasonality patterns
+       - Channel comparison
+       - Priority distribution
+       
+       Dashboard 3: Product Performance
+       - Product matrix (revenue vs margin)
+       - Category breakdown
+       - Trend by product type
+       - Channel effectiveness
+       
+       Dashboard 4: Geographic Insights
+       - World map with revenue bubbles
+       - Regional comparison
+       - Country rankings
+       - Shipping performance by location
+       
+       Dashboard 5: Predictive Analytics
+       - Forecast visualization
+       - Trend indicators
+       - Performance vs target
+       - Alert indicators
+    
+    5. APPLY FORMATTING
+       - Use consistent color scheme:
+         * Primary: #2E86AB
+         * Secondary: #A23B72
+         * Accent: #F18F01
+         * Alert: #C73E1D
+         * Success: #6A994E
+       - Add filters for interactivity
+       - Include tooltips with details
+       - Add dashboard actions for drill-down
+    
+    6. PUBLISH TO TABLEAU PUBLIC
+       - Click "Server" > "Tableau Public" > "Save to Tableau Public"
+       - Enter workbook name: "Healthcare Sales Analytics"
+       - Add description and tags
+       - Set visibility to Public
+       - Copy the share URL
+    
+    7. SHARE THE DASHBOARD
+       - Get the public URL from Tableau Public
+       - Test embedding code for websites
+       - Share link with stakeholders
+    
+    CALCULATED FIELDS TO CREATE IN TABLEAU:
+    
+    1. YoY Growth:
+       (SUM([Total Revenue]) - LOOKUP(SUM([Total Revenue]), -12)) / 
+       ABS(LOOKUP(SUM([Total Revenue]), -12)) * 100
+    
+    2. Profit Margin %:
+       SUM([Total Profit]) / SUM([Total Revenue]) * 100
+    
+    3. Revenue per Order:
+       SUM([Total Revenue]) / COUNTD([Order ID])
+    
+    4. Shipping Efficiency:
+       IF [Shipping_Days] <= 15 THEN 'Excellent'
+       ELSEIF [Shipping_Days] <= 25 THEN 'Good'
+       ELSEIF [Shipping_Days] <= 35 THEN 'Fair'
+       ELSE 'Poor' END
+    
+    5. Customer Lifetime Value:
+       {FIXED [Country]: SUM([Total Revenue])}
+    
+    FILTERS TO ADD:
+    - Date Range
+    - Region
+    - Country
+    - Product Type
+    - Sales Channel
+    - Order Priority
+    
+    PARAMETERS TO CREATE:
+    - Revenue Target (for comparison)
+    - Forecast Period (months ahead)
+    - Top N Products (dynamic ranking)
+    
